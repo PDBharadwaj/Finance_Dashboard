@@ -1,7 +1,8 @@
 # Finance Dashboard
 
 A **Finance Dashboard** built using **React + Redux + Vite**, designed to track income, expenses, and savings with interactive visualizations.
-![Screenshot_3-4-2026_133756_pdbharadwaj github io](https://github.com/user-attachments/assets/0cfbefd4-3a2e-4adf-bb46-feee1f3f5172)
+![Screenshot_3-4-2026_16048_localhost](https://github.com/user-attachments/assets/8a2f9d10-f3df-489f-999b-4edbb52735cd)
+
 
 ---
 
@@ -36,7 +37,8 @@ A **Finance Dashboard** built using **React + Redux + Vite**, designed to track 
 
 * UI supports dark-themed styling
 * Chart compatibility maintained
-![Screenshot_3-4-2026_133821_pdbharadwaj github io](https://github.com/user-attachments/assets/d7824a20-839b-4e0d-b03e-9172460e3186)
+
+![Screenshot_3-4-2026_16212_localhost](https://github.com/user-attachments/assets/4be2353a-89ee-4cb8-9fa6-010629694cb6)
 
 ---
 
