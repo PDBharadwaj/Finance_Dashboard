@@ -8,8 +8,8 @@ import { useState } from "react";
 
 export default function Charts() {
   const data = useSelector((state) => state.transactions);
-  const [view, setView] = useState("Income");
-// 🎨 Color palette
+  const [view, setView] = useState("Savings");
+// Color palette
 const colorPalette = [
   "#FF6B6B",
   "#FFA94D",
@@ -23,7 +23,7 @@ const colorPalette = [
   "#FF922B"
 ];
 
-// 🧠 Dynamic category color mapping
+// Dynamic category color mapping
 const categoryColors = {};
 let colorIndex = 0;
 
@@ -46,6 +46,27 @@ const savingsData = [
   { name: "Expense", value: totalExpense },
   { name: "Savings", value: totalIncome - totalExpense }
 ];
+
+const filteredData =
+  view === "Income"
+    ? incomeData
+    : view === "Expense"
+    ? expenseData
+    : data;
+
+const groupedData = Object.values(
+  filteredData.reduce((acc, item) => {
+    const key = item.category;
+
+    if (!acc[key]) {
+      acc[key] = { category: key, amount: 0 };
+    }
+
+    acc[key].amount += item.amount;
+
+    return acc;
+  }, {})
+);
   return (
     <>
           <div style={{ marginBottom: "15px", display: "flex", justifyContent: "center" }}>
@@ -61,15 +82,14 @@ const savingsData = [
   <h3 className="cards-inner-text charts-text">Balance Overview</h3>
 
   <ResponsiveContainer width="100%" height={300}>
-    <BarChart data={data}>
+    <BarChart data={groupedData}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="category" />
       <YAxis />
       <Tooltip formatter={(value) => `₹ ${value}`} />
-      <Legend />
 
       <Bar dataKey="amount" radius={[6, 6, 0, 0]}>
-        {data.map((entry, index) => (
+        {groupedData.map((entry, index) => (
           <Cell
   key={index}
   fill={getCategoryColor(entry.category)}
