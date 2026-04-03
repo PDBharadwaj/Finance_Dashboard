@@ -67,6 +67,27 @@ const groupedData = Object.values(
     return acc;
   }, {})
 );
+
+// Time-based balance trend
+
+const sortedData = [...data].sort(
+  (a, b) => new Date(a.date) - new Date(b.date)
+);
+
+let runningBalance = 0;
+
+const trendData = sortedData.map((item) => {
+  if (item.type === "Income") {
+    runningBalance += item.amount;
+  } else {
+    runningBalance -= item.amount;
+  }
+
+  return {
+    date: item.date,
+    balance: runningBalance
+  };
+});
   return (
     <>
           <div style={{ marginBottom: "15px", display: "flex", justifyContent: "center" }}>
@@ -151,7 +172,62 @@ const groupedData = Object.values(
   </PieChart>
 </ResponsiveContainer>
       </div>
+{/* Line Chart */}
+<div
+  style={{
+    gridColumn: "1 / -1",
+    display: "flex",
+    justifyContent: "center"
+  }}
+>
+  <div className="chart-card" style={{ width: "70%" }}>
+    
+    <h3 className="cards-inner-text charts-text">Balance Trend</h3>
 
+    <ResponsiveContainer width="100%" height={300}>
+      <LineChart data={trendData}>
+        <CartesianGrid strokeDasharray="3 3" />
+
+        <XAxis
+          dataKey="date"
+          tickFormatter={(date) =>
+            new Date(date).toLocaleDateString()
+          }
+          label={{
+            value: "Date",
+            position: "insideBottom",
+            offset: -5
+          }}
+        />
+
+        <YAxis
+          label={{
+            value: "Balance (₹)",
+            angle: -90,
+            position: "insideLeft"
+          }}
+        />  
+
+        <Tooltip
+          formatter={(value) => `₹ ${value}`}
+          labelFormatter={(label) =>
+            new Date(label).toLocaleDateString()
+          }
+        />
+
+        <Line
+          type="monotone"
+          dataKey="balance"
+          stroke="#339AF0"
+          strokeWidth={3}
+          dot={{ r: 4 }}             
+          activeDot={{ r: 7 }}        
+        />
+      </LineChart>
+    </ResponsiveContainer>
+
+  </div>
+</div>
     </div>
     
     </>
